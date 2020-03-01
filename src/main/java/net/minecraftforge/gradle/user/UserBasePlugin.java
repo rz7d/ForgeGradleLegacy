@@ -247,7 +247,7 @@ public abstract class UserBasePlugin<T extends UserBaseExtension> extends BasePl
             exec.classpath(project.getConfigurations().getByName(CONFIG_MC));
             exec.classpath(project.getConfigurations().getByName(CONFIG_MC_DEPS));
             exec.classpath(project.getConfigurations().getByName(CONFIG_START));
-            exec.classpath(jarTask.getArchivePath());
+            exec.classpath(jarTask.getArchiveFile().get());
             exec.dependsOn(jarTask);
             exec.jvmArgs(getClientJvmArgs(getExtension()));
             exec.args(getClientRunArgs(getExtension()));
@@ -260,7 +260,7 @@ public abstract class UserBasePlugin<T extends UserBaseExtension> extends BasePl
             exec.classpath(project.getConfigurations().getByName(CONFIG_MC));
             exec.classpath(project.getConfigurations().getByName(CONFIG_MC_DEPS));
             exec.classpath(project.getConfigurations().getByName(CONFIG_START));
-            exec.classpath(jarTask.getArchivePath());
+            exec.classpath(jarTask.getArchiveFile().get());
             exec.dependsOn(jarTask);
             exec.jvmArgs(getServerJvmArgs(getExtension()));
             exec.args(getServerRunArgs(getExtension()));
@@ -861,7 +861,7 @@ public abstract class UserBasePlugin<T extends UserBaseExtension> extends BasePl
         final Jar sourceJar = makeTask(TASK_SRC_JAR, Jar.class);
         final String retromappedSrc = getSourceSetFormatted(main, TMPL_RETROMAPED_RPL);
         sourceJar.from(main.getOutput().getResourcesDir());
-        sourceJar.setClassifier("sources");
+        sourceJar.getArchiveClassifier().set("sources");
         sourceJar.dependsOn(main.getCompileJavaTaskName(), main.getProcessResourcesTaskName(), getSourceSetFormatted(main, TMPL_TASK_RETROMAP_RPL));
 
         sourceJar.from(new Closure<Object>(UserBasePlugin.class) {

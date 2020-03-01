@@ -60,7 +60,7 @@ class TaskProcessJson extends DefaultTask
         File outFile = getInstallerJson();
         File truncatedFile = getUniversalJson();
 
-        String input = Files.toString(inputFile, Constants.CHARSET);
+        String input = Files.asCharSource(inputFile, Constants.CHARSET).read();
 
         for (Entry<String, Object> e : replacements.entrySet())
         {
@@ -68,14 +68,14 @@ class TaskProcessJson extends DefaultTask
         }
 
         // write the replaced output
-        Files.write(input.getBytes(Constants.CHARSET), outFile);
+        Files.asByteSink(outFile).write(input.getBytes(Constants.CHARSET));
 
         // get just the useful data
         Gson gson = (new GsonBuilder()).setPrettyPrinting().create();
         input = gson.toJson(gson.fromJson(input, Map.class).get("versionInfo"));
 
         // write the useful truncated data
-        Files.write(input.getBytes(Constants.CHARSET), truncatedFile);
+        Files.asByteSink(truncatedFile).write(input.getBytes(Constants.CHARSET));
     }
 
     public Map<String, Object> getReplacements()

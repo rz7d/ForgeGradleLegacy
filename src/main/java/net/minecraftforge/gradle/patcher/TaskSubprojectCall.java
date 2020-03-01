@@ -73,7 +73,7 @@ class TaskSubprojectCall extends DefaultTask
                 thing = thing.replace(entry.getKey(), (String)entry.getValue());
             }
             
-            Files.write(thing, file, Constants.CHARSET);
+            Files.asCharSink(file, Constants.CHARSET).write(thing);
             initscripts.add(file);
         }
         

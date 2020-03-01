@@ -20,7 +20,7 @@ apply plugin: "com.gradle.plugin-publish"
 apply plugin: 'license'
 
 group = 'net.minecraftforge.gradle'
-version = '2.3-SNAPSHOT'
+version = '2.3.1-SNAPSHOT'
 //version = '2.2.1'
 archivesBaseName = 'ForgeGradle'
 targetCompatibility = '1.8'
@@ -110,10 +110,6 @@ dependencies {
 
     compileOnly 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.3-2'
     testCompile 'junit:junit:4.12'
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.14'
 }
 
 sourceSets {
@@ -308,7 +304,7 @@ test {
 license {
     ext {
         description = 'A Gradle plugin for the creation of Minecraft mods and MinecraftForge plugins.'
-        year = '2013-' + Calendar.getInstance().get(Calendar.YEAR)
+        year = '2013-' + '2019' // + Calendar.getInstance().get(Calendar.YEAR)
         fullname = 'Minecraft Forge'
     }
     header rootProject.file('HEADER')
@@ -372,6 +368,7 @@ uploadArchives {
         {
             // local repo folder. Might wanna juset use  gradle install   if you wanans end it to maven-local
             repository(url: 'file://localhost/' + project.file('repo').getAbsolutePath())
+            repository(url: "file://localhost/" + System.getProperty("user.home") + "/.m2/repository")
         }
 
 
